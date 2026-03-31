@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Welcome Bonus Trading — WB 5.1 & WB 6.0 Flexi</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700;800;900&family=Open+Sans:wght@300;400;600&display=swap" rel="stylesheet">
+
+<style>
+  /* ─── RESET & ROOT ─── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --primary-green: #2D7A4F;
+    --primary-blue:  #1A3C6E;
+    --accent-gold:   #F3C518;
+    --accent-gold2:  #e67e22;
+    --text-dark:     #1C2B3A;
+    --text-light:    #FFFFFF;
+    --light-bg:      #F4F7F2;
+    --gray:          #6B7A8D;
+    --success:       #27ae60;
+    --card-shadow:   0 15px 40px rgba(0,0,0,0.08);
+    --transition:    0.4s ease;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    font-family: 'Open Sans', sans-serif;
+    line-height: 1.7;
+    color: var(--text-dark);
+    background: var(--light-bg);
+    overflow-x: hidden;
+  }
+
+  /* ─── SCROLLBAR ─── */
+  ::-webkit-scrollbar { width: 6px; }
+  ::-webkit-scrollbar-track { background: #f1f1f1; }
+  ::-webkit-scrollbar-thumb { background: var(--primary-green); border-radius: 4px; }
+
+  /* ─── NAVBAR ─── */
+  .navbar {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 1rem 2.5rem;
+    background: rgba(26, 60, 110, 0.96);
+    backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(255,255,255,0.08);
+    transition: padding var(--transition), box-shadow var(--transition);
+  }
+  .navbar.scrolled { padding: 0.6rem 2.5rem; box-shadow: 0 4px 30px rgba(0,0,0,0.2); }
+  .navbar-brand {
+    display: flex; align-items: center; gap: 0.6rem;
+    font-family: 'Montserrat', sans-serif; font-weight: 900; font-size: 1.2rem; color: #fff;
+    text-decoration: none; letter-spacing: 0.03em;
+  }
+  .brand-dot { width: 10px; height: 10px; border-radius: 50%; background: var(--accent-gold); display: inline-block; }
+  .navbar-links { display: flex; gap: 2rem; list-style: none; }
+  .navbar-links a {
+    font-size: 0.82rem; font-weight: 600; letter-spacing: 0.07em; text-transform: uppercase;
+    color: rgba(255,255,255,0.7); text-decoration: none; transition: color 0.2s;
+  }
+  .navbar-links a:hover { color: var(--accent-gold); }
+  .navbar-cta {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold2) 100%);
+    color: var(--text-dark); font-weight: 800; font-size: 0.8rem;
+    letter-spacing: 0.07em; text-transform: uppercase; text-decoration: none;
+    padding: 0.6rem 1.5rem; border-radius: 50px;
+    box-shadow: 0 4px 20px rgba(243,156,18,0.35);
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .navbar-cta:hover { transform: translateY(-2px); box-shadow: 0 8px 28px rgba(243,156,18,0.5); }
+
+  /* ─── CONTAINER ─── */
+  .container { max-width: 1200px; margin: 0 auto; padding: 0 20px; position: relative; z-index: 1; }
+
+  /* ─── HERO ─── */
+  .hero {
+    background: linear-gradient(135deg, var(--primary-green) 0%, var(--primary-blue) 100%);
+    color: var(--text-light);
+    padding: 140px 20px 100px;
+    text-align: center;
+    position: relative;
+    overflow: hidden;
+    min-height: 100vh;
+    display: flex; flex-direction: column; align-items: center; justify-content: center;
+  }
+  .hero::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: url("data:image/svg+xml,%3Csvg width='100' height='100' xmlns='http://www.w3.org/2000/svg'%3E%3Cdefs%3E%3Cpattern id='g' width='100' height='100' patternUnits='userSpaceOnUse'%3E%3Cpath d='M 100 0 L 0 0 0 100' fill='none' stroke='rgba(255,255,255,0.07)' stroke-width='1.5'/%3E%3C/pattern%3E%3C/defs%3E%3Crect width='100' height='100' fill='url(%23g)'/%3E%3C/svg%3E");
+    opacity: 0.5;
+  }
+  .hero::after {
+    content: '';
+    position: absolute; bottom: -2px; left: 0; right: 0; height: 80px;
+    background: var(--light-bg);
+    clip-path: ellipse(55% 100% at 50% 100%);
+  }
+
+  /* Floating orbs */
+  .hero-orb {
+    position: absolute; border-radius: 50%;
+    filter: blur(80px); pointer-events: none; opacity: 0.18;
+  }
+  .hero-orb-1 { width: 500px; height: 500px; background: var(--accent-gold); top: -150px; right: -100px; animation: floatOrb 8s ease-in-out infinite; }
+  .hero-orb-2 { width: 350px; height: 350px; background: #27ae60; bottom: 0; left: -80px; animation: floatOrb 10s ease-in-out infinite 2s; }
+  @keyframes floatOrb { 0%,100%{ transform: translateY(0); } 50%{ transform: translateY(-30px); } }
+
+  .badge {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold2) 100%);
+    color: var(--text-dark);
+    padding: 10px 30px; border-radius: 50px;
+    font-weight: 700; font-size: 13px; letter-spacing: 1.5px; text-transform: uppercase;
+    box-shadow: 0 5px 20px rgba(243,156,18,0.4);
+    margin-bottom: 28px;
+    animation: fadeInDown 0.6s ease-out both;
+  }
+
+  .hero h1 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(36px, 6vw, 66px);
+    font-weight: 900;
+    line-height: 1.1;
+    margin-bottom: 28px;
+    animation: fadeInUp 0.8s ease-out 0.2s both;
+    text-shadow: 0 4px 30px rgba(0,0,0,0.2);
+  }
+  .hero h1 .accent { color: var(--accent-gold); }
+
+  .subheadline {
+    font-size: clamp(16px, 2.2vw, 20px);
+    margin-bottom: 40px;
+    max-width: 760px; margin-left: auto; margin-right: auto;
+    opacity: 0.88; font-weight: 300; line-height: 1.8;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+  }
+
+  .hero-ctas {
+    display: flex; gap: 1rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+    margin-bottom: 3rem;
+  }
+
+  .cta-button {
+    display: inline-block;
+    background: linear-gradient(135deg, var(--accent-gold) 0%, var(--accent-gold2) 100%);
+    color: var(--text-dark);
+    padding: 18px 44px; border-radius: 60px;
+    font-size: 16px; font-weight: 800; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 1px;
+    transition: all var(--transition);
+    box-shadow: 0 15px 40px rgba(243,156,18,0.4);
+  }
+  .cta-button:hover { transform: translateY(-4px); box-shadow: 0 22px 50px rgba(243,156,18,0.55); }
+
+  .cta-button-outline {
+    display: inline-block;
+    background: transparent; color: #fff;
+    padding: 18px 44px; border-radius: 60px;
+    font-size: 16px; font-weight: 700; text-decoration: none;
+    text-transform: uppercase; letter-spacing: 1px;
+    border: 2px solid rgba(255,255,255,0.35);
+    transition: all var(--transition);
+  }
+  .cta-button-outline:hover { border-color: var(--accent-gold); color: var(--accent-gold); transform: translateY(-4px); }
+
+  /* Stats bar */
+  .hero-stats {
+    display: flex; gap: 2.5rem; justify-content: center; flex-wrap: wrap;
+    animation: fadeInUp 0.8s ease-out 0.8s both;
+  }
+  .hero-stat { text-align: center; }
+  .hero-stat-val {
+    font-family: 'Montserrat', sans-serif; font-size: 2.2rem; font-weight: 900;
+    color: var(--accent-gold); line-height: 1;
+  }
+  .hero-stat-label { font-size: 0.75rem; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.65; margin-top: 4px; }
+  .stat-divider { width: 1px; background: rgba(255,255,255,0.2); height: 50px; align-self: center; }
+
+  /* ─── SECTION BASE ─── */
+  .content-section { padding: 90px 20px; }
+  .content-section.alt-bg { background: #fff; }
+  .content-section.dark-bg {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, var(--primary-green) 100%);
+    color: #fff;
+  }
+
+  h2 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: clamp(28px, 4.5vw, 44px);
+    font-weight: 900;
+    color: var(--primary-green);
+    margin-bottom: 16px;
+    text-align: center;
+    position: relative; padding-bottom: 22px;
+  }
+  h2::after {
+    content: ''; position: absolute; bottom: 0; left: 50%;
+    transform: translateX(-50%); width: 70px; height: 4px;
+    background: linear-gradient(90deg, var(--accent-gold), var(--accent-gold2));
+    border-radius: 2px;
+  }
+  .section-intro {
+    text-align: center; color: var(--gray); font-size: 1.05rem;
+    max-width: 620px; margin: 0 auto 3rem; line-height: 1.8;
+  }
+  .dark-bg h2 { color: #fff; }
+  .dark-bg .section-intro { color: rgba(255,255,255,0.75); }
+
+  /* ─── PRODUCT CARDS ─── */
+  .account-types-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+    gap: 30px;
+    margin-top: 40px;
+  }
+
+  .account-card {
+    background: #fff;
+    border-radius: 24px;
+    padding: 42px 38px;
+    box-shadow: var(--card-shadow);
+    transition: transform var(--transition), box-shadow var(--transition);
+    border-top: 6px solid var(--primary-green);
+    display: flex; flex-direction: column;
+    position: relative; overflow: hidden;
+  }
+  .account-card::before {
+    content: '';
+    position: absolute; top: 0; right: 0;
+    width: 200px; height: 200px;
+    background: radial-gradient(circle, rgba(45,122,79,0.06) 0%, transparent 70%);
+    pointer-events: none;
+  }
+  .account-card.featured { border-top-color: var(--accent-gold); }
+  .account-card.featured::before { background: radial-gradient(circle, rgba(243,197,24,0.07) 0%, transparent 70%); }
+  .account-card:hover { transform: translateY(-12px); box-shadow: 0 28px 60px rgba(45,122,79,0.14); }
+  .account-card.featured:hover { box-shadow: 0 28px 60px rgba(243,156,18,0.18); }
+
+  .card-tag {
+    display: inline-block; font-size: 11px; font-weight: 700;
+    letter-spacing: 0.12em; text-transform: uppercase;
+    padding: 5px 14px; border-radius: 50px; margin-bottom: 1.1rem;
+  }
+  .tag-green { background: rgba(45,122,79,0.1); color: var(--primary-green); }
+  .tag-gold  { background: rgba(243,197,24,0.12); color: #b07d00; }
+
+  .account-card h4 {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 1.75rem; font-weight: 900; color: var(--primary-blue);
+    margin-bottom: 0.5rem; line-height: 1.15;
+  }
+  .card-concept { font-size: 0.92rem; color: var(--gray); margin-bottom: 1.5rem; line-height: 1.7; }
+
+  .bonus-box {
+    background: rgba(45,122,79,0.07);
+    border: 1px solid rgba(45,122,79,0.14);
+    padding: 20px 24px; border-radius: 16px; margin-bottom: 1.5rem;
+    text-align: center;
+  }
+  .bonus-box.gold-box {
+    background: rgba(243,197,24,0.08);
+    border-color: rgba(243,156,18,0.2);
+  }
+  .bonus-val {
+    font-family: 'Montserrat', sans-serif;
+    font-size: 3rem; font-weight: 900; color: var(--primary-green);
+    display: block; line-height: 1;
+  }
+  .gold-box .bonus-val { color: #b07d00; }
+  .bonus-period { font-size: 0.8rem; text-transform: uppercase; font-weight: 700; color: var(--gray); letter-spacing: 0.08em; margin-top: 4px; }
+
+  .specs-list { list-style: none; margin: 0 0 2rem; }
+  .specs-list li {
+    padding: 9px 0; font-size: 0.9rem; color: var(--text-dark);
+    display: flex; align-items: flex-start; gap: 10px;
+    border-bottom: 1px solid #f0f0f0;
+  }
+  .specs-list li:last-child { border-bottom: none; }
+  .specs-list li::before { content: '✓'; color: var(--success); font-weight: 900; font-size: 0.85rem; flex-shrink: 0; margin-top: 2px; }
+
+  .card-cta {
+    margin-top: auto;
+    display: block; text-align: center;
+    background: linear-gradient(135deg, var(--primary-green), #1d5c38);
+    color: #fff; font-weight: 800; font-size: 0.9rem;
+    letter-spacing: 0.06em; text-transform: uppercase; text-decoration: none;
+    padding: 15px 30px; border-radius: 50px;
+    transition: all var(--transition);
+    box-shadow: 0 8px 24px rgba(45,122,79,0.25);
+  }
+  .account-card.featured .card-cta {
+    background: linear-gradient(135deg, var(--accent-gold), var(--accent-gold2));
+    color: var(--text-dark);
+    box-shadow: 0 8px 24px rgba(243,156,18,0.3);
+  }
+  .card-cta:hover { transform: translateY(-3px); box-shadow: 0 14px 32px rgba(45,122,79,0.35); }
+  .account-card.featured .card-cta:hover { box-shadow: 0 14px 32px rgba(243,156,18,0.45); }
+
+  /* ─── TABLES ─── */
+  .table-container {
+    background: #fff;
+    border-radius: 20px; overflow: hidden;
+    box-shadow: 0 8px 30px rgba(0,0,0,0.05);
+    margin-bottom: 28px;
+  }
+  .table-title {
+    background: linear-gradient(135deg, var(--primary-blue), #2a5298);
+    color: #fff; padding: 16px 28px;
+    font-weight: 700; font-size: 1rem; font-family: 'Montserrat', sans-serif;
+    display: flex; align-items: center; gap: 10px;
+  }
+  .table-title.green-title {
+    background: linear-gradient(135deg, var(--primary-green), #1d5c38);
+  }
+  .table-title-icon { font-size: 1.1rem; }
+
+  table { width: 100%; border-collapse: collapse; }
+  thead tr { background: #f8f9fa; }
+  th {
+    padding: 14px 20px; text-align: left;
+    font-family: 'Montserrat', sans-serif;
+    font-size: 11px; font-weight: 700; text-transform: uppercase;
+    letter-spacing: 0.1em; color: var(--gray);
+  }
+  td {
+    padding: 14px 20px; font-size: 0.92rem; color: var(--text-dark);
+    border-top: 1px solid #f0f2f5; vertical-align: middle;
+  }
+  tr:hover td { background: #fafbfc; }
+  .highlight-text { color: var(--primary-green); font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 1rem; }
+  .highlight-text-gold { color: #b07d00; font-weight: 700; font-family: 'Montserrat', sans-serif; font-size: 1rem; }
+  .tbl-note { font-size: 0.78rem; color: var(--gray); }
+
+  /* Tables grid */
+  .tables-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 28px; margin-top: 40px; }
+  .table-full { grid-column: 1 / -1; }
+
+  /* ─── COMPARISON TABLE ─── */
+  .compare-wrapper { overflow-x: auto; margin-top: 40px; }
+  .compare-table { width: 100%; border-collapse: collapse; background: #fff; border-radius: 20px; overflow: hidden; box-shadow: var(--card-shadow); }
+  .compare-table thead tr { background: var(--primary-blue); }
+  .compare-table th {
+    padding: 18px 24px; color: #fff;
+    font-family: 'Montserrat', sans-serif; font-size: 13px; font-weight: 800;
+    text-transform: uppercase; letter-spacing: 0.07em;
+  }
+  .compare-table th:first-child { color: rgba(255,255,255,0.55); font-size: 11px; }
+  .compare-table th.th-gold { color: var(--accent-gold); }
+  .compare-table th.th-teal { color: #5EC9BB; }
+  .compare-table td {
+    padding: 15px 24px; border-top: 1px solid #f0f2f5; font-size: 0.9rem; color: var(--text-dark);
+  }
+  .compare-table td:first-child { font-size: 0.82rem; color: var(--gray); font-weight: 600; text-transform: uppercase; letter-spacing: 0.05em; }
+  .compare-table tr:hover td { background: #f9fbf8; }
+  .pill-green { display: inline-block; background: rgba(45,122,79,0.1); color: var(--primary-green); font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 50px; }
+  .pill-gold  { display: inline-block; background: rgba(243,197,24,0.12); color: #b07d00; font-weight: 700; font-size: 0.85rem; padding: 4px 12px; border-radius: 50px; }
+  .check-green { color: var(--success); font-weight: 900; }
+  .check-gold  { color: var(--accent-gold2); font-weight: 900; }
+
+  /* ─── HOW IT WORKS ─── */
+  .steps-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 2rem; margin-top: 3rem; }
+  .step-card {
+    background: rgba(255,255,255,0.1);
+    border: 1px solid rgba(255,255,255,0.15);
+    border-radius: 20px; padding: 2rem 1.6rem;
+    text-align: center;
+    transition: background var(--transition), transform var(--transition);
+  }
+  .step-card:hover { background: rgba(255,255,255,0.16); transform: translateY(-6px); }
+  .step-num {
+    font-family: 'Montserrat', sans-serif; font-size: 2.5rem; font-weight: 900;
+    color: var(--accent-gold); line-height: 1; margin-bottom: 0.8rem;
+  }
+  .step-card h4 { font-family: 'Montserrat', sans-serif; font-size: 1.05rem; font-weight: 800; color: #fff; margin-bottom: 0.5rem; }
+  .step-card p { font-size: 0.87rem; color: rgba(255,255,255,0.68); line-height: 1.7; }
+
+  /* ─── KETENTUAN ─── */
+  .ketentuan-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 1.5rem; margin-top: 3rem; }
+  .ketentuan-card {
+    background: #fff; border-radius: 18px; padding: 1.8rem;
+    box-shadow: 0 6px 24px rgba(0,0,0,0.06);
+    border-left: 5px solid var(--primary-green);
+    transition: transform var(--transition), box-shadow var(--transition);
+  }
+  .ketentuan-card:hover { transform: translateY(-5px); box-shadow: 0 14px 36px rgba(0,0,0,0.1); }
+  .ketentuan-card.gold-border { border-left-color: var(--accent-gold2); }
+  .ketentuan-card.blue-border { border-left-color: var(--primary-blue); }
+  .ketentuan-icon { font-size: 1.6rem; margin-bottom: 0.8rem; }
+  .ketentuan-card h4 { font-family: 'Montserrat', sans-serif; font-size: 1rem; font-weight: 800; color: var(--primary-blue); margin-bottom: 0.6rem; }
+  .ketentuan-card p { font-size: 0.87rem; color: var(--gray); line-height: 1.7; }
+
+  /* ─── FORMULA BOX ─── */
+  .formula-box {
+    background: linear-gradient(135deg, var(--primary-green), #1d5c38);
+    color: #fff; border-radius: 18px; padding: 2rem 2.5rem;
+    text-align: center; margin: 2.5rem 0; box-shadow: 0 10px 40px rgba(45,122,79,0.25);
+  }
+  .formula-label { font-size: 0.75rem; letter-spacing: 0.15em; text-transform: uppercase; opacity: 0.7; margin-bottom: 0.6rem; }
+  .formula-text {
+    font-family: 'Montserrat', sans-serif; font-size: clamp(1rem, 2.5vw, 1.35rem); font-weight: 800;
+    color: var(--accent-gold);
+  }
+  .formula-note { font-size: 0.82rem; opacity: 0.65; margin-top: 0.5rem; }
+
+  /* ─── CTA SECTION ─── */
+  .cta-section {
+    background: linear-gradient(135deg, var(--primary-blue) 0%, #0d2340 100%);
+    padding: 100px 20px; text-align: center; position: relative; overflow: hidden;
+  }
+  .cta-section::before {
+    content: '';
+    position: absolute; inset: 0;
+    background: radial-gradient(ellipse 80% 60% at 50% 50%, rgba(243,197,24,0.08) 0%, transparent 65%);
+    pointer-events: none;
+  }
+  .cta-section h2 { color: #fff; }
+  .cta-section p { color: rgba(255,255,255,0.7); max-width: 580px; margin: 0 auto 3rem; font-size: 1.05rem; line-height: 1.8; }
+  .cta-section .hero-ctas { animation: none; }
+
+  /* ─── FOOTER ─── */
+  footer {
+    background: #080F1E;
+    border-top: 1px solid rgba(255,255,255,0.06);
+    padding: 2.5rem 2.5rem 1.5rem;
+  }
+  .footer-inner {
+    display: flex; align-items: flex-start; justify-content: space-between;
+    flex-wrap: wrap; gap: 2rem; max-width: 1200px; margin: 0 auto;
+    padding-bottom: 2rem; border-bottom: 1px solid rgba(255,255,255,0.07);
+  }
+  .footer-brand { font-family: 'Montserrat', sans-serif; font-size: 1.3rem; font-weight: 900; color: var(--accent-gold); }
+  .footer-tagline { font-size: 0.82rem; color: rgba(255,255,255,0.35); margin-top: 6px; }
+  .footer-links { list-style: none; display: flex; flex-direction: column; gap: 0.5rem; }
+  .footer-links a { font-size: 0.85rem; color: rgba(255,255,255,0.5); text-decoration: none; transition: color 0.2s; }
+  .footer-links a:hover { color: var(--accent-gold); }
+  .footer-links h5 { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: rgba(255,255,255,0.3); margin-bottom: 0.6rem; }
+  .footer-bottom { max-width: 1200px; margin: 1.5rem auto 0; display: flex; align-items: center; justify-content: space-between; flex-wrap: wrap; gap: 0.5rem; }
+  .footer-bottom p { font-size: 0.78rem; color: rgba(255,255,255,0.25); }
+  .disclaimer {
+    background: rgba(255,255,255,0.03); border-top: 1px solid rgba(255,255,255,0.05);
+    padding: 1.5rem 2.5rem; font-size: 0.75rem; color: rgba(255,255,255,0.22); line-height: 1.8;
+    text-align: center;
+  }
+
+  /* ─── ANIMATIONS ─── */
+  @keyframes fadeInUp {
+    from { opacity: 0; transform: translateY(32px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes fadeInDown {
+    from { opacity: 0; transform: translateY(-28px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* Scroll reveal */
+  .reveal {
+    opacity: 0; transform: translateY(28px);
+    transition: opacity 0.7s ease, transform 0.7s ease;
+  }
+  .reveal.visible { opacity: 1; transform: translateY(0); }
+  .reveal-delay-1 { transition-delay: 0.1s; }
+  .reveal-delay-2 { transition-delay: 0.2s; }
+  .reveal-delay-3 { transition-delay: 0.3s; }
+  .reveal-delay-4 { transition-delay: 0.4s; }
+
+  /* ─── RESPONSIVE ─── */
+  @media (max-width: 900px) {
+    .navbar-links { display: none; }
+    .tables-grid { grid-template-columns: 1fr; }
+    .table-full { grid-column: auto; }
+  }
+  @media (max-width: 680px) {
+    .account-types-grid { grid-template-columns: 1fr; }
+    .hero-stats { gap: 1.2rem; }
+    .stat-divider { display: none; }
+    .hero-ctas { flex-direction: column; align-items: center; }
+    .cta-button, .cta-button-outline { width: 100%; max-width: 320px; text-align: center; }
+    .navbar { padding: 0.9rem 1.2rem; }
+    .navbar-brand { font-size: 1rem; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════
+     NAVBAR
+═══════════════════════════════════════════ -->
+<nav class="navbar" id="navbar">
+  <a href="#" class="navbar-brand">
+    <span class="brand-dot"></span>
+    Welcome Bonus
+  </a>
+  <ul class="navbar-links">
+    <li><a href="#produk">Produk</a></li>
+    <li><a href="#bonus">Skema Bonus</a></li>
+    <li><a href="#perbandingan">Perbandingan</a></li>
+    <li><a href="#ketentuan">Ketentuan</a></li>
+    <li><a href="#cara">Cara Mulai</a></li>
+  </ul>
+  <a href="#daftar" class="navbar-cta">Buka Akun</a>
+</nav>
+
+
+<!-- ═══════════════════════════════════════════
+     HERO
+═══════════════════════════════════════════ -->
+<section class="hero">
+  <div class="hero-orb hero-orb-1"></div>
+  <div class="hero-orb hero-orb-2"></div>
+
+  <div class="container">
+    <div class="badge">★ Produk Trading Eksklusif — WB 5.1 &amp; WB 6.0 Flexi</div>
+
+    <h1>
+      Ubah Saldo Mengendap Menjadi<br>
+      <span class="accent">Mesin Penghasil Profit</span><br>
+      yang Konsisten
+    </h1>
+
+    <p class="subheadline">
+      Trading Tanpa Beban Biaya, Investasi dengan Bonus yang Nyata.<br>
+      Pilih jalur komitmen atau fleksibilitas — keduanya dirancang untuk memaksimalkan pertumbuhan modal Anda.
+    </p>
+
+    <div class="hero-ctas">
+      <a href="#produk" class="cta-button">Lihat Produk Kami</a>
+      <a href="#perbandingan" class="cta-button-outline">Bandingkan Akun</a>
+    </div>
+
+    <div class="hero-stats">
+      <div class="hero-stat">
+        <div class="hero-stat-val">10%</div>
+        <div class="hero-stat-label">Bonus Maks. WB 5.1</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">6%</div>
+        <div class="hero-stat-label">Reward p.a. WB 6.0</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">$0</div>
+        <div class="hero-stat-label">Biaya Komisi & Swap</div>
+      </div>
+      <div class="stat-divider"></div>
+      <div class="hero-stat">
+        <div class="hero-stat-val">$100</div>
+        <div class="hero-stat-label">Deposit Minimum Flexi</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PRODUK CARDS
+═══════════════════════════════════════════ -->
+<section class="content-section" id="produk">
+  <div class="container">
+    <p style="text-align:center;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary-green);font-weight:700;margin-bottom:0.5rem;" class="reveal">Spesifikasi Produk</p>
+    <h2 class="reveal">Komitmen atau Fleksibilitas?<br>Tentukan Jalur Kesuksesan Anda</h2>
+    <p class="section-intro reveal">Setiap investor memiliki profil unik. Kami menghadirkan dua jalur eksklusif yang membantu Anda mencapai target profit dengan cara paling nyaman.</p>
+
+    <div class="account-types-grid">
+
+      <!-- WB 5.1 -->
+      <div class="account-card featured reveal reveal-delay-1">
+        <span class="card-tag tag-gold">WB 5.1 — Akun Komitmen</span>
+        <h4>Akselerator Kekayaan<br>dengan Bonus Maksimal</h4>
+        <p class="card-concept">Dirancang bagi Anda yang menghargai kedisiplinan dalam berinvestasi. Sistem penguncian modal memastikan Anda mendapatkan suntikan bonus besar di akhir tenor.</p>
+
+        <div class="bonus-box gold-box">
+          <span class="bonus-val">8 – 10%</span>
+          <div class="bonus-period">Bonus per 360 hari</div>
+        </div>
+
+        <ul class="specs-list">
+          <li>Free Commission &amp; Free Swap (Syariah Friendly)</li>
+          <li>Spread Floating Standard (Simbol LP)</li>
+          <li>Modal terkunci sesuai tenor yang dipilih (90–360 hari)</li>
+          <li>Rebate Flat + Garansi Income</li>
+          <li>Auto Rollover — ekuitas akhir jadi modal baru otomatis</li>
+          <li>Perlindungan balance negatif — reset ke angka 0</li>
+          <li>Penarikan profit bebas kapan saja</li>
+        </ul>
+
+        <a href="#daftar" class="card-cta">Buka Akun WB 5.1 →</a>
+      </div>
+
+      <!-- WB 6.0 -->
+      <div class="account-card reveal reveal-delay-2">
+        <span class="card-tag tag-green">WB 6.0 Flexi — Reward Harian</span>
+        <h4>Kebebasan Mutlak<br>dengan Reward Harian</h4>
+        <p class="card-concept">Tanpa kontrak, tanpa tenor. Saldo Anda tidak hanya diam — terus memberikan hasil setiap hari tanpa syarat rumit. Kendali penuh ada di tangan Anda.</p>
+
+        <div class="bonus-box">
+          <span class="bonus-val">3 – 6%</span>
+          <div class="bonus-period">Reward per tahun (dikreditkan harian)</div>
+        </div>
+
+        <ul class="specs-list">
+          <li>Free Commission &amp; Free Swap</li>
+          <li>Tanpa tenor — bebas tarik kapan saja</li>
+          <li>Reward dikreditkan otomatis setiap hari</li>
+          <li>Bebas syarat lot trading</li>
+          <li>Penarikan partial maupun full kapan saja</li>
+          <li>Likuiditas tinggi — tidak ada lock-up</li>
+          <li>Biaya admin transparan: hanya $0.3/bulan</li>
+        </ul>
+
+        <a href="#daftar" class="card-cta">Mulai WB 6.0 Flexi →</a>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     SKEMA BONUS
+═══════════════════════════════════════════ -->
+<section class="content-section alt-bg" id="bonus">
+  <div class="container">
+    <p style="text-align:center;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary-green);font-weight:700;margin-bottom:0.5rem;" class="reveal">Skema Bonus</p>
+    <h2 class="reveal">Hitung Potensi Return Anda</h2>
+    <p class="section-intro reveal">Semakin besar deposit, semakin tinggi indikasi bonus. Simulasikan potensi penghasilan Anda dengan tabel di bawah ini.</p>
+
+    <!-- Formula WB 5.1 -->
+    <div class="formula-box reveal">
+      <div class="formula-label">Rumus Perhitungan WB 5.1</div>
+      <div class="formula-text">Bonus = Deposit × Indikasi WB × Tenor ÷ 360</div>
+      <div class="formula-note">Contoh: $10.000 × 10% × 360 ÷ 360 = <strong>$1.000 bonus</strong></div>
+    </div>
+
+    <div class="tables-grid">
+
+      <!-- WB 5.1 Bonus Table -->
+      <div class="table-container reveal reveal-delay-1">
+        <div class="table-title green-title">
+          <span class="table-title-icon">🏆</span>
+          WB 5.1 — Indikasi Bonus per 360 Hari
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Deposit (USD)</th>
+              <th>Bonus / 360 Hari</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$1,000 – $4,999.99</td>
+              <td><span class="highlight-text">8%</span></td>
+            </tr>
+            <tr>
+              <td>$5,000 – $9,999.99</td>
+              <td><span class="highlight-text">9%</span></td>
+            </tr>
+            <tr>
+              <td>≥ $10,000</td>
+              <td><span class="highlight-text">10%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- WB 6.0 Bonus Table -->
+      <div class="table-container reveal reveal-delay-2">
+        <div class="table-title">
+          <span class="table-title-icon">⚡</span>
+          WB 6.0 Flexi — Reward Harian (per Tahun)
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Deposit (USD)</th>
+              <th>Reward Tahunan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td>$100 – $999.99</td>
+              <td><span class="highlight-text-gold">3%</span></td>
+            </tr>
+            <tr>
+              <td>$1,000 – $4,999.99</td>
+              <td><span class="highlight-text-gold">4%</span></td>
+            </tr>
+            <tr>
+              <td>$5,000 – $9,999.99</td>
+              <td><span class="highlight-text-gold">5%</span></td>
+            </tr>
+            <tr>
+              <td>≥ $10,000</td>
+              <td><span class="highlight-text-gold">6%</span></td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+
+      <!-- Target Lot WB 5.1 (Full Width) -->
+      <div class="table-container table-full reveal">
+        <div class="table-title green-title">
+          <span class="table-title-icon">📊</span>
+          WB 5.1 — Target Lot Berdasarkan Tenor
+        </div>
+        <table>
+          <thead>
+            <tr>
+              <th>Tenor (Hari)</th>
+              <th>Perhitungan Target Lot</th>
+              <th>Keterangan</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr>
+              <td><strong>90 – 179 hari</strong> <span class="tbl-note">(3–6 bulan)</span></td>
+              <td><span class="highlight-text">Total Kredit ÷ $15</span></td>
+              <td class="tbl-note">Tenor pendek, divisor lebih kecil</td>
+            </tr>
+            <tr>
+              <td><strong>180 – 269 hari</strong> <span class="tbl-note">(6–9 bulan)</span></td>
+              <td><span class="highlight-text">Total Kredit ÷ $17</span></td>
+              <td class="tbl-note">Tenor menengah</td>
+            </tr>
+            <tr>
+              <td><strong>270 – 360 hari</strong> <span class="tbl-note">(9–12 bulan)</span></td>
+              <td><span class="highlight-text">Total Kredit ÷ $20</span></td>
+              <td class="tbl-note">Tenor penuh, divisor lebih besar</td>
+            </tr>
+          </tbody>
+        </table>
+        <div style="padding:14px 20px;background:#f8f9fa;font-size:0.82rem;color:var(--gray);display:flex;gap:2rem;flex-wrap:wrap;border-top:1px solid #eee;">
+          <span>✓ <strong>Target tercapai</strong> → bonus kredit berubah jadi balance</span>
+          <span>✓ <strong>Target meleset</strong> → bonus prorata, sisanya dihapus</span>
+          <span>✓ <strong>Balance negatif</strong> → otomatis reset ke 0</span>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     PERBANDINGAN
+═══════════════════════════════════════════ -->
+<section class="content-section" id="perbandingan">
+  <div class="container">
+    <p style="text-align:center;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary-green);font-weight:700;margin-bottom:0.5rem;" class="reveal">Perbandingan Produk</p>
+    <h2 class="reveal">Temukan Kecocokan Anda</h2>
+    <p class="section-intro reveal">Apakah Anda seorang visioner yang siap berkomitmen, atau trader dinamis yang mengutamakan likuiditas? Bandingkan dua akun kami secara langsung.</p>
+
+    <div class="compare-wrapper reveal">
+      <table class="compare-table">
+        <thead>
+          <tr>
+            <th>Fitur Utama</th>
+            <th class="th-gold">🏆 Welcome Bonus 5.1</th>
+            <th class="th-teal">⚡ WB 6.0 Flexi</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Karakter Modal</td>
+            <td><span class="pill-gold">🔒 Terkunci s/d Jatuh Tempo</span></td>
+            <td><span class="pill-green">🔓 Bebas Tarik Kapan Saja</span></td>
+          </tr>
+          <tr>
+            <td>Jangka Waktu</td>
+            <td>Ada Tenor (90 – 360 hari)</td>
+            <td><span class="pill-green">Tanpa Tenor</span></td>
+          </tr>
+          <tr>
+            <td>Besaran Hasil</td>
+            <td><strong style="color:#b07d00;">8% – 10%</strong> per 360 hari</td>
+            <td><strong style="color:var(--primary-green);">3% – 6%</strong> per tahun</td>
+          </tr>
+          <tr>
+            <td>Pola Reward</td>
+            <td>Dikreditkan saat jatuh tempo</td>
+            <td><span class="pill-green">Harian — otomatis</span></td>
+          </tr>
+          <tr>
+            <td>Syarat Trading</td>
+            <td>Ada target lot</td>
+            <td><span class="pill-green">Tanpa syarat lot</span></td>
+          </tr>
+          <tr>
+            <td>Penarikan Modal</td>
+            <td style="color:var(--gray);">Tidak sebelum jatuh tempo</td>
+            <td><span class="pill-green">Kapan saja</span></td>
+          </tr>
+          <tr>
+            <td>Penarikan Profit</td>
+            <td><span class="check-green">✓</span> Bebas</td>
+            <td><span class="check-green">✓</span> Bebas</td>
+          </tr>
+          <tr>
+            <td>Free Commission</td>
+            <td><span class="check-green">✓ Gratis</span></td>
+            <td><span class="check-green">✓ Gratis</span></td>
+          </tr>
+          <tr>
+            <td>Free Swap</td>
+            <td><span class="check-green">✓ Syariah Friendly</span></td>
+            <td><span class="check-green">✓ Gratis</span></td>
+          </tr>
+          <tr>
+            <td>Rebate</td>
+            <td><span class="pill-gold">Flat + Garansi Income</span></td>
+            <td><span class="pill-green">Flat</span></td>
+          </tr>
+          <tr>
+            <td>Auto Rollover</td>
+            <td><span class="check-green">✓ Tersedia</span></td>
+            <td>—</td>
+          </tr>
+          <tr>
+            <td>Biaya Admin</td>
+            <td>—</td>
+            <td>$0.3 / bulan</td>
+          </tr>
+          <tr>
+            <td>Deposit Minimum</td>
+            <td><strong>$1,000</strong></td>
+            <td><span class="pill-green"><strong>$100</strong></span></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CARA MULAI (DARK BG)
+═══════════════════════════════════════════ -->
+<section class="content-section dark-bg" id="cara">
+  <div class="container">
+    <p style="text-align:center;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-gold);font-weight:700;margin-bottom:0.5rem;" class="reveal">Mulai Sekarang</p>
+    <h2 class="reveal" style="color:#fff;">Tiga Langkah Mudah<br>Menuju Profit</h2>
+    <p class="section-intro reveal" style="color:rgba(255,255,255,0.7);">Proses onboarding kami dirancang sederhana agar Anda bisa langsung mulai menghasilkan tanpa hambatan.</p>
+
+    <div class="steps-grid">
+      <div class="step-card reveal reveal-delay-1">
+        <div class="step-num">01</div>
+        <h4>Pilih Akun</h4>
+        <p>Tentukan apakah Anda ingin komitmen tenor (WB 5.1) atau fleksibilitas penuh (WB 6.0 Flexi) sesuai profil trading Anda.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-2">
+        <div class="step-num">02</div>
+        <h4>Deposit Modal</h4>
+        <p>Lakukan deposit sesuai tier yang dipilih. Mulai dari $100 untuk WB 6.0 Flexi, atau $1.000 untuk WB 5.1.</p>
+      </div>
+      <div class="step-card reveal reveal-delay-3">
+        <div class="step-num">03</div>
+        <h4>Trading &amp; Raih Bonus</h4>
+        <p>Mulai trading dan saksikan bonus Anda tumbuh. Profit bebas ditarik kapan saja sejak hari pertama.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     KETENTUAN PENTING
+═══════════════════════════════════════════ -->
+<section class="content-section alt-bg" id="ketentuan">
+  <div class="container">
+    <p style="text-align:center;font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--primary-green);font-weight:700;margin-bottom:0.5rem;" class="reveal">Ketentuan Penting</p>
+    <h2 class="reveal">Syarat &amp; Ketentuan Bonus</h2>
+    <p class="section-intro reveal">Pahami mekanisme bonus agar perjalanan trading Anda berjalan tanpa hambatan dan sesuai ekspektasi.</p>
+
+    <div class="ketentuan-grid">
+
+      <div class="ketentuan-card gold-border reveal reveal-delay-1">
+        <div class="ketentuan-icon">🔒</div>
+        <h4>WB 5.1 — Syarat Pencairan</h4>
+        <p>Bonus cair saat jatuh tempo sesuai tenor yang dipilih, dengan syarat adanya aktivitas transaksi. Penarikan modal sebelum jatuh tempo akan menghanguskan bonus secara keseluruhan.</p>
+      </div>
+
+      <div class="ketentuan-card reveal reveal-delay-2">
+        <div class="ketentuan-icon">⚡</div>
+        <h4>WB 6.0 Flexi — Pencairan Bebas</h4>
+        <p>Tidak ada syarat lot, tidak ada tenor. Reward dikreditkan otomatis setiap hari. Penarikan dana, baik sebagian maupun penuh, dapat dilakukan kapan saja tanpa penalti.</p>
+      </div>
+
+      <div class="ketentuan-card blue-border reveal reveal-delay-1">
+        <div class="ketentuan-icon">✅</div>
+        <h4>Target Lot Tercapai</h4>
+        <p>Seluruh bonus dalam kredit akan dikonversi sepenuhnya menjadi balance yang dapat ditarik, setara dengan uang sungguhan di akun Anda.</p>
+      </div>
+
+      <div class="ketentuan-card gold-border reveal reveal-delay-2">
+        <div class="ketentuan-icon">⚖️</div>
+        <h4>Target Lot Tidak Tercapai</h4>
+        <p>Bonus diberikan secara prorata sesuai persentase lot yang telah terpenuhi. Sisa bonus yang belum terpenuhi akan dihapus secara otomatis.</p>
+      </div>
+
+      <div class="ketentuan-card blue-border reveal reveal-delay-3">
+        <div class="ketentuan-icon">🔄</div>
+        <h4>Auto Rollover (WB 5.1)</h4>
+        <p>Saat jatuh tempo, ekuitas akhir akun Anda secara otomatis menjadi modal baru. Welcome Bonus dihitung ulang berdasarkan modal baru tersebut untuk periode berikutnya.</p>
+      </div>
+
+      <div class="ketentuan-card reveal reveal-delay-4">
+        <div class="ketentuan-icon">🛡️</div>
+        <h4>Perlindungan Balance Negatif</h4>
+        <p>Jika terjadi kerugian ekstrem yang membuat balance menjadi negatif, sistem kami secara otomatis me-reset saldo akun Anda kembali ke angka nol tanpa beban utang.</p>
+      </div>
+
+    </div>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     CTA AKHIR
+═══════════════════════════════════════════ -->
+<section class="cta-section" id="daftar">
+  <div class="container">
+    <p style="font-size:0.75rem;letter-spacing:0.14em;text-transform:uppercase;color:var(--accent-gold);font-weight:700;margin-bottom:0.5rem;" class="reveal">Jangan Tunda Lagi</p>
+    <h2 class="reveal">Jangan Biarkan Dana Anda<br>Berhenti Bekerja</h2>
+    <p class="reveal">Pasar terus bergerak, dan begitu pula peluang Anda. Keputusan cerdas Anda hari ini adalah langkah awal menuju portofolio yang lebih sehat dan produktif.</p>
+
+    <div class="hero-ctas reveal">
+      <a href="#" class="cta-button">Buka Akun WB 5.1 Sekarang</a>
+      <a href="#" class="cta-button-outline">Mulai dengan WB 6.0 Flexi</a>
+    </div>
+
+    <p style="margin-top:2rem;font-size:0.82rem;color:rgba(255,255,255,0.35);" class="reveal">
+      Pertanyaan? Hubungi tim support kami — siap membantu proses pendaftaran Anda.
+    </p>
+  </div>
+</section>
+
+
+<!-- ═══════════════════════════════════════════
+     FOOTER
+═══════════════════════════════════════════ -->
+<footer>
+  <div class="footer-inner">
+    <div>
+      <div class="footer-brand">Welcome Bonus</div>
+      <div class="footer-tagline">WB 5.1 &amp; WB 6.0 Flexi — Trading Cerdas</div>
+    </div>
+    <div>
+      <ul class="footer-links">
+        <h5>Produk</h5>
+        <li><a href="#produk">WB 5.1 — Akun Komitmen</a></li>
+        <li><a href="#produk">WB 6.0 — Akun Flexi</a></li>
+        <li><a href="#bonus">Skema Bonus</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul class="footer-links">
+        <h5>Informasi</h5>
+        <li><a href="#perbandingan">Perbandingan Akun</a></li>
+        <li><a href="#ketentuan">Syarat &amp; Ketentuan</a></li>
+        <li><a href="#cara">Cara Mulai</a></li>
+      </ul>
+    </div>
+    <div>
+      <ul class="footer-links">
+        <h5>Bantuan</h5>
+        <li><a href="#">Hubungi Support</a></li>
+        <li><a href="#">FAQ</a></li>
+        <li><a href="#">Kebijakan Privasi</a></li>
+      </ul>
+    </div>
+  </div>
+  <div class="footer-bottom">
+    <p>© 2025 Welcome Bonus Program. Hak cipta dilindungi.</p>
+    <p>WB 5.1 &amp; WB 6.0 Flexi</p>
+  </div>
+</footer>
+
+<div class="disclaimer">
+  <strong>Disclaimer:</strong> Informasi pada halaman ini bersifat edukatif dan tidak merupakan rekomendasi investasi. Trading di pasar forex mengandung risiko tinggi dan tidak cocok untuk semua investor. Indikasi bonus bukan merupakan jaminan return. Pastikan Anda memahami seluruh syarat dan ketentuan sebelum membuka akun. Past performance bukan jaminan hasil di masa depan.
+</div>
+
+
+<!-- ═══════════════════════════════════════════
+     JAVASCRIPT
+═══════════════════════════════════════════ -->
+<script>
+  /* Navbar shrink on scroll */
+  const navbar = document.getElementById('navbar');
+  window.addEventListener('scroll', () => {
+    navbar.classList.toggle('scrolled', window.scrollY > 60);
+  });
+
+  /* Scroll reveal */
+  const revealEls = document.querySelectorAll('.reveal');
+  const observer = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('visible');
+        observer.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.12 });
+  revealEls.forEach(el => observer.observe(el));
+
+  /* Smooth active nav highlight */
+  const sections = document.querySelectorAll('section[id]');
+  const navLinks = document.querySelectorAll('.navbar-links a');
+  window.addEventListener('scroll', () => {
+    let current = '';
+    sections.forEach(sec => {
+      if (window.scrollY >= sec.offsetTop - 120) current = sec.getAttribute('id');
+    });
+    navLinks.forEach(link => {
+      link.style.color = link.getAttribute('href') === '#' + current
+        ? 'var(--accent-gold)'
+        : '';
+    });
+  });
+</script>
+
+</body>
+</html>
